@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserCrudController;
 //TODO Route Задание 1: По GET урлу /hello отобразить view - /resources/views/hello.blade (без контроллера)
 // Одна строка кода
 Route::view('/hello','hello');
@@ -28,18 +29,20 @@ Route::get('/users/{id}',[UserController::class,'show']);
 Route::get('/users/bind/{user}',[UserController::class,'showBind']);
 
 
-
 //TODO Route Задание 6: Выполнить редирект с урла /bad на урл /good
 // Одна строка кода
-
+Route::redirect('/bad','good');
 
 //TODO Route Задание 7: Добавить роут на ресурс контроллер - UserCrudController с урлом - /users_crud
 // Одна строка кода
-
+Route::resource('users_crud',UserCrudController::class);
 
 
 //TODO Route Задание 8: Организовать группу роутов (Route::group()) объединенных префиксом - dashboard
-
+Route::prefix('dashboard')->group(function () {
+    Route::get('/admin',[ App\Http\Controllers\Admin\IndexController::class,'index']);
+    Route::post('/admin/post',[ App\Http\Controllers\Admin\IndexController::class,'post']);
+});
     // Задачи внутри группы роутов dashboard
     //TODO Route Задание 9: Добавить роут GET /admin -> Admin/IndexController -> index
 
@@ -48,7 +51,12 @@ Route::get('/users/bind/{user}',[UserController::class,'showBind']);
 
 
 //TODO Route Задание 11: Организовать группу роутов (Route::group()) объединенных префиксом - security и мидлваром auth
+Route::group(['name'=>'security','prefix'=>'security','middleware'=>'auth'],function (){
+    Route::get('/admin/auth',[App\Http\Controllers\Admin\IndexController::class,'auth']);
+});
+{
 
+}
     // Задачи внутри группы роутов security
     //TODO Задание 12: Добавить роут GET /admin/auth -> Admin/IndexController -> auth
 
