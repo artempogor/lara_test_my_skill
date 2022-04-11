@@ -3,13 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Layout</title>
+    <title>@yield('title')</title>
 </head>
 <body class="antialiased">
+@yield('body')
     <!-- TODO Blade Задание 3: Подключите view с меню -->
-    <!-- shared/menu.blade.php -->
-
-    @yield('content')
+    @include('shared.menu')
 </body>
 </html>

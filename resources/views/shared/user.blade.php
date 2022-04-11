@@ -1,3 +1,4 @@
 <div>
-    {{ $user->name }}
+    @yield('content'){{ $user->name }}
 </div>
+
